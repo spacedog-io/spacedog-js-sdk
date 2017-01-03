@@ -1,23 +1,55 @@
 var SpaceDog = require('../spacedog.min.js')
 var assert = require('assert');
-
+var expect = require('chai').expect;
+var xhrMock = require('xhr-mock');
 
 describe('data # ', function() {
   
-    it('should search on one type, http post', function() {
+    beforeEach(function(){
       SpaceDog.initialize("dummyBackendId")
+    })
 
-      SpaceDog.Data.search("course", {
-        "query":{
-            "match_all":{ }
-        },
-        "from":0,
-        "size":10
-        //"sort":
+    before(function(){
+      xhrMock.setup();
+    })
+
+    after(function(){
+      xhrMock.teardown();
+    })
+
+    it('should search on one type, http post', function(done) {
+
+      xhrMock.post('https://dummyBackendId.spacedog.io/1/search/dummyType', function(req, res) {
+
+        //return null;              //simulate an error
+        //return res.timeout(true); //simulate a timeout
+
+        return res
+          .status(201)
+          .header('Content-Type', 'application/json')
+          .body(JSON.stringify({}))
+        ;
+
+      });
+
+      SpaceDog.Data.search({
+        "type":"dummyType", 
+        "payload":{
+          "query":{
+              "match_all":{ }
+          },
+          "from":0,
+          "size":10
+          //"sort":
+        }
+      }, function(err, res){
+
+        expect(err).to.be.null;
+        expect(res).to.be.instanceOf(Object)
+
+        done()
       })
 
-      // mock
-      // HTTP POST /{backendId}.spacedog.io/1/search/course avec le payload
 
     });
 
@@ -53,69 +85,69 @@ describe('data # ', function() {
 
 
 
-    it('should findOne', function() {
-      SpaceDog.initialize("dummyBackendId")
+    // it('should findOne', function() {
+    //   SpaceDog.initialize("dummyBackendId")
 
-      SpaceDog.Data.findOne("dummyType", "dummyId").then(function(res){
-        // assert res == ...      
-      })
+    //   SpaceDog.Data.findOne("dummyType", "dummyId").then(function(res){
+    //     // assert res == ...      
+    //   })
 
-      // mock
-      // HTTP GET /{backendId}.spacedog.io/1/data/dummyType/dummyId et retourne
-      // {
-      //  ...,
-      //  meta: { ... }
-      // }
+    //   // mock
+    //   // HTTP GET /{backendId}.spacedog.io/1/data/dummyType/dummyId et retourne
+    //   // {
+    //   //  ...,
+    //   //  meta: { ... }
+    //   // }
 
-    });
-
-
-    it('should find', function() {
-      SpaceDog.initialize("dummyBackendId")
-
-      SpaceDog.Data.find("dummyType", 0, 10).then(function(res){
-        // assert res == ...      
-      })
-
-      // mock
-      // HTTP GET /{backendId}.spacedog.io/1/data/dummyType?from=0&size=10 et retourne
-      // {
-      //  ...,
-      //  total: 20,
-      //  results : [ {...}, ... ]
-      // }
-
-    });
+    // });
 
 
-    it('should update', function() {
-      SpaceDog.initialize("dummyBackendId")
+    // it('should find', function() {
+    //   SpaceDog.initialize("dummyBackendId")
 
-      SpaceDog.Data.update("dummyType", "dummyId", { "foo":"bar" })
+    //   SpaceDog.Data.find("dummyType", 0, 10).then(function(res){
+    //     // assert res == ...      
+    //   })
 
-      // mock
-      // HTTP PUT /{backendId}.spacedog.io/1/data/dummyType/dummyId?stric=true avec payload foo:bar
+    //   // mock
+    //   // HTTP GET /{backendId}.spacedog.io/1/data/dummyType?from=0&size=10 et retourne
+    //   // {
+    //   //  ...,
+    //   //  total: 20,
+    //   //  results : [ {...}, ... ]
+    //   // }
 
-    });
+    // });
 
-    it('should patch', function() {
-      SpaceDog.initialize("dummyBackendId")
 
-      SpaceDog.Data.patch("dummyType", "dummyId", { "foo":"bar" })
+    // it('should update', function() {
+    //   SpaceDog.initialize("dummyBackendId")
 
-      // mock
-      // HTTP PUT /{backendId}.spacedog.io/1/data/dummyType/dummyId avec payload foo:bar
+    //   SpaceDog.Data.update("dummyType", "dummyId", { "foo":"bar" })
 
-    });
+    //   // mock
+    //   // HTTP PUT /{backendId}.spacedog.io/1/data/dummyType/dummyId?stric=true avec payload foo:bar
 
-    it('should delete', function() {
-      SpaceDog.initialize("dummyBackendId")
+    // });
 
-      SpaceDog.Data.patch("dummyType", "dummyId")
+    // it('should patch', function() {
+    //   SpaceDog.initialize("dummyBackendId")
 
-      // mock
-      // HTTP DELETE /{backendId}.spacedog.io/1/data/dummyType/dummyId
+    //   SpaceDog.Data.patch("dummyType", "dummyId", { "foo":"bar" })
 
-    });
+    //   // mock
+    //   // HTTP PUT /{backendId}.spacedog.io/1/data/dummyType/dummyId avec payload foo:bar
+
+    // });
+
+    // it('should delete', function() {
+    //   SpaceDog.initialize("dummyBackendId")
+
+    //   SpaceDog.Data.patch("dummyType", "dummyId")
+
+    //   // mock
+    //   // HTTP DELETE /{backendId}.spacedog.io/1/data/dummyType/dummyId
+
+    // });
 });
 

@@ -1,22 +1,22 @@
 
-import push from './lib/push.js'
-import credentials from './lib/credentials.js'
-import data from './lib/data.js'
-import setup from './lib/setup.js'
+import Data from './lib/data.js'
+import Config from './lib/config.js'
 
 var SpaceDog = {
     initialize (backendId) {
         if (backendId == undefined) {
             throw "BackendId is required."
         }
-        this._backendId = backendId
+        Config.backendId = backendId
     },
     
     getBackendId () {
-        return this._backendId
+        return Config.backendId
     }
 }
 
-// SpaceDog.Data = data
+
+
+SpaceDog.Data = Data
 
 export default SpaceDog

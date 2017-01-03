@@ -30,7 +30,9 @@
     "browserify": "^13.1.1",
     "chai": "^3.5.0",
     "rollup": "^0.39.2",
-    "rollup-plugin-babel": "^2.7.1"
+    "rollup-plugin-babel": "^2.7.1",
+    "sinon": "^1.17.7",
+    "xhr-mock": "^1.7.0"
   },
   "browserify": {
     "transform": [

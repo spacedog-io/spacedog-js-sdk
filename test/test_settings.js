@@ -1,38 +1,38 @@
-var SpaceDog = require('../spacedog.min.js')
+// var SpaceDog = require('../spacedog.min.js')
 
-describe('settings #', function() {
+// describe('settings #', function() {
   
-    it('should get settings', function() {
-      SpaceDog.initialize("dummyBackendId")
+//     it('should get settings', function() {
+//       SpaceDog.initialize("dummyBackendId")
 
-      SpaceDog.Settings.load("dummy").then(function(res){
-        assert.equal(res, { foo:"bar" })
-      })
+//       SpaceDog.Settings.load("dummy").then(function(res){
+//         assert.equal(res, { foo:"bar" })
+//       })
 
-      // mock
-      // HTTP GET /{backendId}.spacedog.io/1/settings/dummy
-      // => {
-      //    foo:"bar",
-      //    ...
-      // }
+//       // mock
+//       // HTTP GET /{backendId}.spacedog.io/1/settings/dummy
+//       // => {
+//       //    foo:"bar",
+//       //    ...
+//       // }
 
-    });
+//     });
 
-    it('should set settings', function() {
-      SpaceDog.initialize("dummyBackendId")
+//     it('should set settings', function() {
+//       SpaceDog.initialize("dummyBackendId")
 
-      SpaceDog.Settings.set("dummy", {
-        "foo2":"bar2"        
-      })
+//       SpaceDog.Settings.set("dummy", {
+//         "foo2":"bar2"        
+//       })
 
-      // mock
-      // HTTP POST /{backendId}.spacedog.io/1/settings/dummy
-      // avec paylod {
-      //    foo2:"bar2",
-      //    ...
-      // }
+//       // mock
+//       // HTTP POST /{backendId}.spacedog.io/1/settings/dummy
+//       // avec paylod {
+//       //    foo2:"bar2",
+//       //    ...
+//       // }
 
-    });
+//     });
 
 
-});
+// });
