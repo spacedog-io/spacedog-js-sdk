@@ -1,6 +1,6 @@
 {
   "name": "spacedog-js-sdk",
-  "version": "0.0.2",
+  "version": "0.0.2#a",
   "description": "js sdk for spacedog web service api",
   "main": "./spacedog.min.js",
   "jsnext:main": ".src/spacedog.js",
