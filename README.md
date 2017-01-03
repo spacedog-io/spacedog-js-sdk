@@ -5,11 +5,11 @@ JS SDK for SpaceDog Web Service API
 Installation
 ---
 
-`npm install spacedog-js --save`
+`npm install spacedog-js-sdk --save`
 
 **in browser**
 
-`<script type="text/javascript" src="spacedog.js"></script>`
+`<script type="text/javascript" src="node_modules/spacedog-js-sdk/spacedog.min.js"></script>`
 
 **ES6**
 
@@ -49,7 +49,16 @@ The tests in the `test/` folder are another way to get to know this library.
 Examples
 ---
 
-Get them in the `examples/` folder. **SOON**
+Get them in the `examples/` folder.
+
+*Note:* every example uses the same backend ::
+  id : dummybackend
+  user : dummybackend
+  pass : hi dummybackend
+
+**`examples/ionic1`**
+
+Make sure to run `npm install` and then `ionic serve` to run in your browser.
 
 
 Build
