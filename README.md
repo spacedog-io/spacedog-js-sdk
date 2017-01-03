@@ -21,9 +21,9 @@ Usage
 
 **Initialization**
 
-This SDK provides a global object attached to window named `SpaceDog`. This object is the entry point.
+This SDK provides a global object attached to window named `SpaceDog`. This object is the main entry point.
 
-The first thing to do is to tell SpaceDog the backend id. Before any other call to SpaceDog, you should :
+Before anything else, you need to tell SpaceDog the backend id, like so :
 
 `SpaceDog.initialize("yourBackendId")`
 
@@ -31,18 +31,25 @@ The first thing to do is to tell SpaceDog the backend id. Before any other call 
 
 **SpaceDog Objects**
 
-SpaceDog has a lot of features ! The following list is top level objects that each contains a subset of feature, specefic to its namespace. For instance, all things related to search (make get query, elastic search queries, ...) are in the `SpaceDog.Search` object.
+SpaceDog has a lot of features ! The following list is the top level objects. Each one contains a subset of feature, specefic to its namespace. For instance, all things related to search (get queries, elastic search queries, ...) are in the `SpaceDog.Search` namespace.
 
   - `SpaceDog.Data`
   - `SpaceDog.Search`
   ...
 
-
 **Search**
+
+
 
 **Go deeper**
 
 The tests in the `test/` folder are another way to get to know this library.
+
+
+Examples
+---
+
+Get them in the `examples/` folder. **SOON**
 
 
 Build
