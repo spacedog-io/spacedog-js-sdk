@@ -1,0 +1,47 @@
+{
+  "name": "spacedog-js-sdk",
+  "version": "1.0.0",
+  "description": "js sdk for spacedog web service api",
+  "main": "./spacedog.min.js",
+  "jsnext:main": ".src/spacedog.js",
+  "scripts": {
+    "compile": "./node_modules/.bin/rollup -c",
+    "test": "mocha",
+    "dev": "watch -p \"{src,test}/**/*.js \" -c \"npm run compile && mocha\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spacedog-io/spacedog-js-sdk.git"
+  },
+  "author": "Frédéric Marcel Falliere",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/spacedog-io/spacedog-js-sdk/issues"
+  },
+  "homepage": "https://github.com/spacedog-io/spacedog-js-sdk#readme",
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-env": "^1.1.4",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "babel-preset-es2016": "^6.16.0",
+    "babel-register": "^6.18.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.1",
+    "chai": "^3.5.0",
+    "rollup": "^0.39.2",
+    "rollup-plugin-babel": "^2.7.1"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015"
+          ]
+        }
+      ]
+    ]
+  }
+}
