@@ -39,7 +39,9 @@ SpaceDog has a lot of features ! The following list is the top level objects. Ea
 
 **Search**
 
-
+    SpaceDog.Data.search({type:"tvshow"}, function(err, data){
+        // data.results is an array of plain json object
+    })
 
 **Go deeper**
 
@@ -51,25 +53,17 @@ Examples
 
 Get them in the `examples/` folder.
 
-*Note:* every example uses the same backend ::
+*Note:* every example uses the same backend :
+
   id : dummybackend
+
   user : dummybackend
+
   pass : hi dummybackend
 
 **`examples/ionic1`**
 
 Make sure to run `npm install` and then `ionic serve` to run in your browser.
-
-
-Build
----
-
-`npm run compile` => builds `src/` into `./spacedog.js`
-
-`npm run dev` => run tests when files in `src/` change
-
-`npm run test` => run tests
-
 
 Development env setup
 ---
@@ -77,3 +71,14 @@ Development env setup
 Requirements
 
 - `npm install -g watch-cli` (useful for `npm run dev`)
+
+
+Commands / Build
+---
+
+- `npm run compile` => builds `src/` into `./spacedog.js`
+
+- `npm run dev` => run tests when files in `src/` change
+
+- `npm run test` => run tests
+
