@@ -37,11 +37,35 @@ SpaceDog has a lot of features ! The following list is the top level objects. Ea
   - `SpaceDog.Search`
   ...
 
+**Credentials**
+
+Here is a code example on how to login :
+
+    SpaceDog.Credentials.login({
+        "username":"dummyUsername",
+        "password":"dummyPassword",
+        "rememberMe":true
+    }, function(err, res){
+
+        expect(res).to.have.property("accessToken")
+        expect(err).to.be.null;
+        expect(res).to.be.instanceOf(Object)
+
+        expect(SpaceDog.Credentials.canTryLogin()).to.be.true
+
+    })
+
+`rememberMe` is a boolean that saves the token to the localStorage for later use, for a faster login for users. In your controller, you can test if a token a present with the `SpaceDog.Credentials.canTryLogin()` function.
+
 **Search**
+
+For now, only this is tested :
 
     SpaceDog.Data.search({type:"tvshow"}, function(err, data){
         // data.results is an array of plain json object
     })
+
+
 
 **Go deeper**
 

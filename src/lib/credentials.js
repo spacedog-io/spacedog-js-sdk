@@ -1,5 +1,6 @@
 import UrlBuilder from './urlBuilder.js'
 import Config from './config.js'
+
 export default {
     /**
      * opts : { username:string, password:string, rememberMe:bool }
@@ -18,7 +19,7 @@ export default {
             try {
                 var json = JSON.parse(xhr.responseText);
 
-                //Config.
+                Config.default_authorization_header = "Bearer "+json.accessToken
                 if (opts.rememberMe) {
                   localStorage.setItem('SPACEDOG_CREDENTIALS_TOKEN', json.accessToken)
                 }

@@ -33,7 +33,7 @@ describe('credentials # ', function() {
       xhrMock.teardown();
     })
 
-    it('should login, remember, and say yes on canTryLogin', function(done) {
+    it('should login, config default header, remember, and say yes on canTryLogin', function(done) {
 
       xhrMock.get('https://dummyBackendId.spacedog.io/1/login', function(req, res) {
 
@@ -57,6 +57,8 @@ describe('credentials # ', function() {
 
         expect(SpaceDog.Credentials.canTryLogin()).to.be.true
 
+        expect(SpaceDog._Config.default_authorization_header).to.equal("Bearer "+res.accessToken)
+
         done()
       })
 
@@ -64,7 +66,7 @@ describe('credentials # ', function() {
     });
 
 
-    it('should login, not remember, and say no on canTryLogin', function(done) {
+    it('should login, config default header, not remember, and say no on canTryLogin', function(done) {
 
       xhrMock.get('https://dummyBackendId.spacedog.io/1/login', function(req, res) {
 
@@ -87,6 +89,8 @@ describe('credentials # ', function() {
         expect(res).to.be.instanceOf(Object)
 
         expect(SpaceDog.Credentials.canTryLogin()).to.be.false
+
+        expect(SpaceDog._Config.default_authorization_header).to.equal("Bearer "+res.accessToken)
 
         done()
       })
