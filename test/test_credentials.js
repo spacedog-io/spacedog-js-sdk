@@ -58,6 +58,9 @@ describe('credentials # ', function() {
 
         expect(SpaceDog._Config.default_authorization_header).to.equal("Bearer "+res.accessToken)
 
+        expect(SpaceDog.Credentials.getRememberedState()).to.have.property("accessToken")
+        expect(SpaceDog.Credentials.getRememberedState()).to.have.property("backendId")
+
         done()
       })
 
