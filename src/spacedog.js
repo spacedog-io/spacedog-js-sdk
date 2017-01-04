@@ -1,6 +1,9 @@
 
-import Data from './lib/data.js'
+
 import Config from './lib/config.js'
+import Credentials from './lib/credentials.js'
+import Data from './lib/data.js'
+
 
 var SpaceDog = {
     initialize (backendId) {
@@ -16,7 +19,8 @@ var SpaceDog = {
 }
 
 
-
+SpaceDog._Config = Config // pas en release ?
+SpaceDog.Credentials = Credentials
 SpaceDog.Data = Data
 
 export default SpaceDog

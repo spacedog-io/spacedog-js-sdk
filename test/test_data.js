@@ -21,13 +21,17 @@ describe('data # ', function() {
 
       xhrMock.post('https://dummyBackendId.spacedog.io/1/search/dummyType', function(req, res) {
 
+        expect(req.url()).to.equal('https://dummyBackendId.spacedog.io/1/search/dummyType')
+        expect(req.method()).to.equal('POST')
+        expect(req.headers()['content-type']).to.equal('application/json')
+
         //return null;              //simulate an error
         //return res.timeout(true); //simulate a timeout
 
         return res
           .status(201)
           .header('Content-Type', 'application/json')
-          .body(JSON.stringify({}))
+          .body(JSON.stringify({"foo":"bar"}))
         ;
 
       });
@@ -44,6 +48,7 @@ describe('data # ', function() {
         }
       }, function(err, res){
 
+        expect(res).to.deep.equal({"foo":"bar"})
         expect(err).to.be.null;
         expect(res).to.be.instanceOf(Object)
 

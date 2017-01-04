@@ -1,5 +1,7 @@
 export default {
 
-    backendId:null
+    backendId:null,
+
+    default_authorization_header:null
 
 }
