@@ -93,6 +93,7 @@ export default {
 
 
     forget () {
+        Config.default_authorization_header = null
         localStorage.removeItem('SPACEDOG_CREDENTIALS_TOKEN')
     },
 
