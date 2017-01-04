@@ -1,5 +1,6 @@
 import UrlBuilder from './urlBuilder.js'
 import Config from './config.js'
+import UtilXHR from './util-xhr'
 
 export default {
     /**
@@ -8,48 +9,36 @@ export default {
      */
     login (opts, cb) {
 
-        var data = JSON.stringify({});
-
-        var xhr = new XMLHttpRequest();
-
-        var url = UrlBuilder.forLogin();
-
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState === 4) {
-            try {
-                var json = JSON.parse(xhr.responseText);
-
-                if (!json.success) {
-
-                    cb(json, null)
-
-                } else {
-                    
-                    Config.default_authorization_header = "Bearer "+json.accessToken
-                    if (opts.rememberMe) {
-                      localStorage.setItem('SPACEDOG_CREDENTIALS_TOKEN', JSON.stringify({
-                        "accessToken":json.accessToken,
-                        "backendId":Config.backendId
-                      }))
-                    }
-                    cb(null, json)
-                }
-
-            } catch (e) {
-                console.warn("SpaceDog.Credentials# could not parse xhr.responseText and therefore not able to 1/ set authorization headers 2/ remember user token, if rememberMe is true\nPossibly something else. Check the caught exeption:", e)
-                cb(null, xhr.responseText)
-            }
-          }
-        }
-
-        xhr.open("GET", url);
         try {
-            xhr.setRequestHeader("Authorization", "Basic "+new Buffer(opts.username+":"+opts.password).toString('base64'));
+            Config.default_authorization_header = "Basic "+new Buffer(opts.username+":"+opts.password).toString('base64')
         } catch (e) {
-            xhr.setRequestHeader("Authorization", "Basic "+btoa(opts.username+":"+opts.password));
+            Config.default_authorization_header = "Basic "+btoa(opts.username+":"+opts.password)
         }
 
-        xhr.send();
+        UtilXHR.get(UrlBuilder.forLogin(), function(err, data) {
+
+            if (err != null) {
+
+                Config.default_authorization_header = null                
+
+            } else {
+
+                Config.default_authorization_header = "Bearer "+data.accessToken
+
+                if (opts.rememberMe) {
+                    
+                  localStorage.setItem('SPACEDOG_CREDENTIALS_TOKEN', JSON.stringify({
+                    "accessToken":data.accessToken,
+                    "backendId":Config.backendId
+                  }))
+                }
+                
+            }
+
+            cb(err, data)
+
+        })
+
     },
 
     loginWithSavedCredentials (cb)  {
@@ -58,37 +47,20 @@ export default {
 
         Config.backendId = saved.backendId
 
-        var authorization = "Bearer "+saved.accessToken  
+        Config.default_authorization_header = "Bearer "+saved.accessToken
 
-        var xhr = new XMLHttpRequest();
+        UtilXHR.get(UrlBuilder.forLogin(), function(err, data) {
 
-        var url = UrlBuilder.forLogin();
+            if (err == null) {
 
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState === 4) {
-            try {
-                var json = JSON.parse(xhr.responseText);
+                Config.default_authorization_header = "Bearer "+data.accessToken
 
-                if (!json.success) {
-
-                    cb(json, null)
-
-                } else {
-                    
-                    Config.default_authorization_header = "Bearer "+json.accessToken
-                    cb(null, json)
-                }
-
-            } catch (e) {
-                console.warn("SpaceDog.Credentials# could not parse xhr.responseText and therefore not able to 1/ set authorization headers 2/ remember user token, if rememberMe is true\nPossibly something else. Check the caught exeption:", e)
-                cb(null, xhr.responseText)
             }
-          }
-        }
 
-        xhr.open("GET", url);
-        xhr.setRequestHeader("Authorization", authorization);
-        xhr.send();
+            cb(err, data)
+
+        })
+
     },
 
 

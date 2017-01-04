@@ -7,13 +7,10 @@ describe('data # ', function() {
   
     beforeEach(function(){
       SpaceDog.initialize("dummyBackendId")
-    })
-
-    before(function(){
       xhrMock.setup();
     })
 
-    after(function(){
+    afterEach(function(){
       xhrMock.teardown();
     })
 
@@ -48,8 +45,8 @@ describe('data # ', function() {
         }
       }, function(err, res){
 
-        expect(res).to.deep.equal({"foo":"bar"})
         expect(err).to.be.null;
+        expect(res).to.deep.equal({"foo":"bar"})
         expect(res).to.be.instanceOf(Object)
 
         done()

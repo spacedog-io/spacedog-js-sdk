@@ -100,6 +100,7 @@ describe('credentials # ', function() {
 
     });
 
+
     it('should fail login', function(done) {
 
       xhrMock.get('https://dummyBackendId.spacedog.io/1/login', function(req, res) {
