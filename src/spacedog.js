@@ -3,7 +3,7 @@
 import Config from './lib/config.js'
 import Credentials from './lib/credentials.js'
 import Data from './lib/data.js'
-
+import Schema from './lib/schema.js'
 
 var SpaceDog = {
     initialize (backendId) {
@@ -27,5 +27,6 @@ var SpaceDog = {
 SpaceDog._Config = Config // pas en release ?
 SpaceDog.Credentials = Credentials
 SpaceDog.Data = Data
+SpaceDog.Schema = Schema
 
 export default SpaceDog

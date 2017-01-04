@@ -59,6 +59,12 @@ Here is a code example on how to login :
 
 `rememberMe` is a boolean that saves the token to the localStorage for later use, for a faster login for users. In your controller, you can test if a token a present with the `SpaceDog.Credentials.canTryLogin()` function.
 
+**Schma**
+
+  SpaceDog.Schema.list(function(err, data){
+    // 
+  })
+
 **Search**
 
 For now, only this is tested :
@@ -66,7 +72,6 @@ For now, only this is tested :
     SpaceDog.Data.search({type:"tvshow"}, function(err, data){
         // data.results is an array of plain json object
     })
-
 
 
 **Go deeper**
