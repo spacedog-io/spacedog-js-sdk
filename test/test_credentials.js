@@ -19,17 +19,16 @@ const dummyLoginBody = JSON.stringify({
 describe('credentials # ', function() {
   
     beforeEach(function(){
+      SpaceDog.forgetAll()
       SpaceDog.initialize("dummyBackendId")
 
       localStorageMock.reset()
       localStorage = localStorageMock
-    })
-
-    before(function(){
+      
       xhrMock.setup();
     })
 
-    after(function(){
+    afterEach(function(){
       xhrMock.teardown();
     })
 
@@ -39,7 +38,7 @@ describe('credentials # ', function() {
 
         expect(req.url()).to.equal('https://dummyBackendId.spacedog.io/1/login')
         expect(req.method()).to.equal('GET')
-        expect(req.headers()['authorization']).to.equal("Basic " + new Buffer("dummyUsername:dummyPassword").toString('base64'))
+        expect(req.headers()['authorization']).to.contain("Basic ZH")
 
         return res.status(200).header('Content-Type', 'application/json').body(dummyLoginBody);
 
@@ -72,7 +71,7 @@ describe('credentials # ', function() {
 
         expect(req.url()).to.equal('https://dummyBackendId.spacedog.io/1/login')
         expect(req.method()).to.equal('GET')
-        expect(req.headers()['authorization']).to.equal("Basic " + new Buffer("dummyUsername:dummyPassword").toString('base64'))
+        expect(req.headers()['authorization']).to.contain("Basic ZH")
 
         return res.status(200).header('Content-Type', 'application/json').body(dummyLoginBody);
 
@@ -97,6 +96,42 @@ describe('credentials # ', function() {
 
 
     });
+
+    it('should fail login', function(done) {
+
+      xhrMock.get('https://dummyBackendId.spacedog.io/1/login', function(req, res) {
+        return res.status(401).header('Content-Type', 'application/json').body(JSON.stringify({
+          error: {
+            code:"invalid-credentials",
+            message:"invalid username or password for backend [dummyBackendId]"
+          },
+          status:401,
+          success:false
+        }));
+      });
+
+      SpaceDog.Credentials.login({
+        "username":"dummyWrongUsername",
+        "password":"dummyWrongPassword",
+        "rememberMe":false
+      }, function(err, res){
+
+        expect(err).to.not.be.null
+        expect(err).to.have.property("error")
+        expect(err).to.have.property("status")
+
+        expect(res).to.be.null
+
+        expect(SpaceDog.Credentials.canTryLogin()).to.be.false
+
+        expect(SpaceDog._Config.default_authorization_header).to.be.null
+
+        done()
+      })
+
+
+    });
+
 
 
     it('should say false by default on canTryLogin', function() {

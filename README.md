@@ -27,6 +27,8 @@ Before anything else, you need to tell SpaceDog the backend id, like so :
 
 `SpaceDog.initialize("yourBackendId")`
 
+(`SpaceDog.forgetAll()` will reset everything spacedog wise on the client side)
+
 [You can create a backend here](https://cockpit.spacedog.io/sign-up.html)
 
 **SpaceDog Objects**

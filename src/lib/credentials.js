@@ -19,11 +19,19 @@ export default {
             try {
                 var json = JSON.parse(xhr.responseText);
 
-                Config.default_authorization_header = "Bearer "+json.accessToken
-                if (opts.rememberMe) {
-                  localStorage.setItem('SPACEDOG_CREDENTIALS_TOKEN', json.accessToken)
+                if (!json.success) {
+
+                    cb(json, null)
+
+                } else {
+                    
+                    Config.default_authorization_header = "Bearer "+json.accessToken
+                    if (opts.rememberMe) {
+                      localStorage.setItem('SPACEDOG_CREDENTIALS_TOKEN', json.accessToken)
+                    }
+                    cb(null, json)
                 }
-                cb(null, json)
+
             } catch (e) {
                 console.warn("SpaceDog.Credentials# could not parse xhr.responseText and therefore not able to 1/ set authorization headers 2/ remember user token, if rememberMe is true ; caught execotuion:", e)
                 cb(null, xhr.responseText)
@@ -32,7 +40,11 @@ export default {
         }
 
         xhr.open("GET", url);
-        xhr.setRequestHeader("Authorization", "Basic "+new Buffer(opts.username+":"+opts.password).toString('base64'));
+        try {
+            xhr.setRequestHeader("Authorization", "Basic "+new Buffer(opts.username+":"+opts.password).toString('base64'));
+        } catch (e) {
+            xhr.setRequestHeader("Authorization", "Basic "+btoa(opts.username+":"+opts.password));
+        }
 
         xhr.send(data);
     },

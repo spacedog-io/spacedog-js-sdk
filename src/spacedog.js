@@ -15,6 +15,11 @@ var SpaceDog = {
     
     getBackendId () {
         return Config.backendId
+    },
+
+    forgetAll () {
+        Config.backendId = null
+        Config.default_authorization_header = null
     }
 }
 
