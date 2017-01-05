@@ -6,18 +6,16 @@ JS SDK for SpaceDog Web Service API
 
 `npm install spacedog-js-sdk --save`
 
-### in browser
-
-`<script type="text/javascript" src="node_modules/spacedog-js-sdk/spacedog.min.js"></script>`
-
-### ES6
-
-We also provide the possibility to use spacedog-js as a es6 module (simply because our `package.json` provides `jsnext:main` key). Then `import SpaceDog from 'SpaceDog'`
-
-
 
 ## Usage
 
+### In browser
+
+`<script type="text/javascript" src="node_modules/spacedog-js-sdk/spacedog.min.js"></script>`
+
+#### ES6
+
+We also provide the possibility to use spacedog-js as a es6 module (simply because our `package.json` provides `jsnext:main` key). Then `import SpaceDog from 'SpaceDog'`
 
 ### Initialization
 
