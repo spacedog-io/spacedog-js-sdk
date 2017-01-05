@@ -2,25 +2,25 @@
 
 JS SDK for SpaceDog Web Service API
 
-Installation
-===
+## Installation
 
 `npm install spacedog-js-sdk --save`
 
-**in browser**
+### in browser
 
 `<script type="text/javascript" src="node_modules/spacedog-js-sdk/spacedog.min.js"></script>`
 
-**ES6**
+### ES6
 
 We also provide the possibility to use spacedog-js as a es6 module (simply because our `package.json` provides `jsnext:main` key). Then `import SpaceDog from 'SpaceDog'`
 
 
-Usage
-===
 
-Initialization
----
+## Usage
+
+
+### Initialization
+
 
 This SDK provides a global object attached to window named `SpaceDog`. This object is the main entry point.
 
@@ -32,8 +32,8 @@ Before anything else, you need to tell `SpaceDog` which backend to use, with a b
 
 [You can create a backend here](https://cockpit.spacedog.io/sign-up.html)
 
-SpaceDog Objects
----
+
+### SpaceDog Objects
 
 SpaceDog has a lot of features ! The following list is the top level objects. Each one contains a subset of feature, specefic to its namespace. For instance, all things related to search (get queries, elastic search queries, ...) are in the `SpaceDog.Search` namespace.
 
@@ -44,7 +44,7 @@ SpaceDog has a lot of features ! The following list is the top level objects. Ea
 
 ...
 
-**Credentials**
+#### Credentials
 
 Here is a code example on how to login :
 
@@ -69,7 +69,7 @@ If a token is present, you would typically call, to auto login a user :
     SpaceDog.Credentials.loginWithSavedCredentials(loginCallback)
 
 
-**Data**
+#### Data
 
 `Data` is the entry point to fetching, searching, updating, deleting and creating data. The `search` method take 3 arguments : 
 
@@ -103,11 +103,12 @@ The constructor `new SpaceDog.Data.PaginationSession` takes 2 arguments :
   - `from` : integer
   - `size` : integer
 
-**Settings**
 
-**TODO**
+####Settings
 
-**Schema**
+  **TODO**
+
+####Schema
 
     SpaceDog.Schema.list(function(err, data){
       // data is an Object where keys are the schema
@@ -115,13 +116,13 @@ The constructor `new SpaceDog.Data.PaginationSession` takes 2 arguments :
 
 **TODO**
 
-**Go deeper**
+####Go deeper####
 
 The tests in the `test/` folder are another way to get to know this library.
 
 
-Examples
----
+## Examples
+
 
 Get them in the `examples/` folder.
 
@@ -133,20 +134,19 @@ Get them in the `examples/` folder.
 
   pass : hi dummybackend
 
-**`examples/ionic1`**
+### `examples/ionic1`
 
 Make sure to run `npm install` and then `ionic serve` to run in your browser.
 
-Development env setup
----
 
-Requirements
+## Development env setup
 
-- `npm install -g watch-cli` (useful for `npm run dev`)
+### Requirements
+
+  - `npm install -g watch-cli` (useful for `npm run dev`)
 
 
-Commands / Build
----
+### Commands / Build
 
 - `npm run compile` => builds `src/` into `./spacedog.js`
 
