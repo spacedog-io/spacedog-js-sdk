@@ -1,6 +1,6 @@
 import UrlBuilder from './urlBuilder.js'
 import Config from './config.js'
-import UtilXHR from './util-xhr'
+import UtilXHR from './utilXhr'
 
 export default {
     /**

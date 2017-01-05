@@ -2,19 +2,15 @@ var SpaceDog = require('../spacedog.min.js')
 var assert = require('assert');
 var expect = require('chai').expect;
 var xhrMock = require('xhr-mock');
+var _ = require('lodash');
 
 describe('data # ', function() {
   
+
     beforeEach(function(){
       SpaceDog.initialize("dummyBackendId")
+
       xhrMock.setup();
-    })
-
-    afterEach(function(){
-      xhrMock.teardown();
-    })
-
-    it('should search on one type, http post', function(done) {
 
       xhrMock.post('https://dummyBackendId.spacedog.io/1/search/dummyType', function(req, res) {
 
@@ -23,15 +19,30 @@ describe('data # ', function() {
         expect(req.headers()['content-type']).to.equal('application/json')
 
         //return null;              //simulate an error
-        //return res.timeout(true); //simulate a timeout
+        // return res.timeout(true); //simulate a timeout
 
         return res
           .status(201)
           .header('Content-Type', 'application/json')
-          .body(JSON.stringify({"foo":"bar"}))
-        ;
+          .body(JSON.stringify({
+                                  "took": 1,
+                                  "total": 10,
+                                  "results": [ Array.from(Array(10).keys()).map(function(a,o){ return {
+                                        ["foo"+a]:"bar"+a
+                                    }})
+                                  ]
+                              }))
 
       });
+    })
+
+    afterEach(function(){
+      xhrMock.teardown();
+    })
+
+
+
+    it('should search on one type, http post', function(done) {
 
       SpaceDog.Data.search({
         "type":"dummyType", 
@@ -45,16 +56,43 @@ describe('data # ', function() {
         }
       }, function(err, res){
 
-        expect(err).to.be.null;
-        expect(res).to.deep.equal({"foo":"bar"})
+        expect(err).to.be.null
+
+        expect(res).to.not.be.null
+        expect(res).to.have.property("total")
+        expect(res).to.have.property("results")
         expect(res).to.be.instanceOf(Object)
 
         done()
       })
+    })
 
 
-    });
 
+
+    it('should paginate', function(done) {
+
+        var session = new SpaceDog.Data.PaginationSession(0, 7)
+
+        SpaceDog.Data.search( {
+            "type":"dummyType"
+        }, function (err, res){
+
+            expect(session.isNextPageAvailable()).to.be.true
+
+            session.pointNextPage()
+
+            SpaceDog.Data.search( {
+                "type":"dummyType"
+            }, function (err, res){
+
+                expect(session.isNextPageAvailable()).to.be.false
+
+                done()
+            }, session)
+
+        }, session)
+    })
 
     // Les 2 suivants sont moins prioritaires 
     //
