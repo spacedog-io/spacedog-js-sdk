@@ -3,7 +3,7 @@
 JS SDK for SpaceDog Web Service API
 
 Installation
----
+===
 
 `npm install spacedog-js-sdk --save`
 
@@ -17,13 +17,14 @@ We also provide the possibility to use spacedog-js as a es6 module (simply becau
 
 
 Usage
----
+===
 
-**Initialization**
+Initialization
+---
 
 This SDK provides a global object attached to window named `SpaceDog`. This object is the main entry point.
 
-Before anything else, you need to tell SpaceDog the backend id, like so :
+Before anything else, you need to tell `SpaceDog` which backend to use, with a backendId, like so :
 
 `SpaceDog.initialize("yourBackendId")`
 
@@ -31,13 +32,17 @@ Before anything else, you need to tell SpaceDog the backend id, like so :
 
 [You can create a backend here](https://cockpit.spacedog.io/sign-up.html)
 
-**SpaceDog Objects**
+SpaceDog Objects
+---
 
 SpaceDog has a lot of features ! The following list is the top level objects. Each one contains a subset of feature, specefic to its namespace. For instance, all things related to search (get queries, elastic search queries, ...) are in the `SpaceDog.Search` namespace.
 
+  - `SpaceDog.Credentials`
   - `SpaceDog.Data`
-  - `SpaceDog.Search`
-  ...
+  - `SpaceDog.Settings`
+  - `SpaceDog.Schema`
+
+...
 
 **Credentials**
 
@@ -57,22 +62,58 @@ Here is a code example on how to login :
 
     })
 
-`rememberMe` is a boolean that saves the token to the localStorage for later use, for a faster login for users. In your controller, you can test if a token a present with the `SpaceDog.Credentials.canTryLogin()` function.
+`rememberMe` is a boolean that will saves the session token (the SpaceDog one) to the localStorage for later use, when your final user comes back, and you needs to log him in automaticly for faster login experience!. In your controller, you can test if a token a present with the `SpaceDog.Credentials.canTryLogin()` function.
 
-**Schma**
+If a token is present, you would typically call, to auto login a user : 
 
-  SpaceDog.Schema.list(function(err, data){
-    // 
-  })
+    SpaceDog.Credentials.loginWithSavedCredentials(loginCallback)
 
-**Search**
 
-For now, only this is tested :
+**Data**
+
+`Data` is the entry point to fetching, searching, updating, deleting and creating data. The `search` method take 3 arguments : 
+
+  - `opts` : { type:string, payload:object }
+  - `cb` : callback function (err, data) ..
+  - `paginationSession` : optional paginationSession
+
+Example :
 
     SpaceDog.Data.search({type:"tvshow"}, function(err, data){
         // data.results is an array of plain json object
     })
 
+The third argument, `paginationSession`, is an object that you would typically handle like this :
+
+    var session = new SpaceDog.Data.PaginationSession(0, 7)
+
+    SpaceDog.Data.search( {
+        "type":"dummyType"
+    }, function (err, res){
+
+        // session.isNextPageAvailable() => will say true is there is a next page available
+
+        // session.pointNextPage() => will make the session point to the next page, making next calls to search method fetch the next page
+
+    },
+    session)
+
+The constructor `new SpaceDog.Data.PaginationSession` takes 2 arguments :
+
+  - `from` : integer
+  - `size` : integer
+
+**Settings**
+
+**TODO**
+
+**Schema**
+
+    SpaceDog.Schema.list(function(err, data){
+      // data is an Object where keys are the schema
+    })
+
+**TODO**
 
 **Go deeper**
 
