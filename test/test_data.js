@@ -14,6 +14,12 @@ describe('data # ', function() {
 
       xhrMock.post('https://dummyBackendId.spacedog.io/1/search/dummyType', function(req, res) {
 
+        var length = 10
+        var body = JSON.parse(req.body())
+        if (body.size) {
+            length = body.size
+        } 
+
         expect(req.url()).to.equal('https://dummyBackendId.spacedog.io/1/search/dummyType')
         expect(req.method()).to.equal('POST')
         expect(req.headers()['content-type']).to.equal('application/json')
@@ -27,10 +33,10 @@ describe('data # ', function() {
           .body(JSON.stringify({
                                   "took": 1,
                                   "total": 10,
-                                  "results": [ Array.from(Array(10).keys()).map(function(a,o){ return {
+                                  "results": Array.from(Array(length).keys()).map(function(a,o){ return {
                                         ["foo"+a]:"bar"+a
                                     }})
-                                  ]
+                                  
                               }))
 
       });
@@ -79,6 +85,7 @@ describe('data # ', function() {
         }, function (err, res){
 
             expect(session.isNextPageAvailable()).to.be.true
+            expect(res.results.length).to.equal(7)
 
             session.pointNextPage()
 

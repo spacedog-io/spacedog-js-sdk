@@ -51,6 +51,6 @@ export default {
     },
 
     post (payload, url, cb) {
-        _xend("POST", null, url, cb)
+        _xend("POST", payload, url, cb)
     }
 }
