@@ -8,11 +8,19 @@ export default class PaginationSession {
     }
 
     isNextPageAvailable () {
-        console.log("isNextPageAvailable ", this._from , this._size , this._total, this._from + this._size < this._total)
         if (this._total == null) {
             return true
         }
         return this._from + this._size < this._total
+    }
+
+
+    isPrevPageAvailable () {
+        if (this._total == null) {
+            return false
+        }
+        // console.log("isPrevPageAvailable from=", this._from, "size=", this._size)
+        return this._from >= this._size
     }
 
     _newPageLoaded (result) {
@@ -21,6 +29,10 @@ export default class PaginationSession {
 
     pointNextPage () {
         this._from += this._size
+    }
+
+    pointPrevPage () {
+        this._from -= this._size
     }
 
     getFrom () {
