@@ -19,7 +19,6 @@ export default class PaginationSession {
         if (this._total == null) {
             return false
         }
-        // console.log("isPrevPageAvailable from=", this._from, "size=", this._size)
         return this._from >= this._size
     }
 

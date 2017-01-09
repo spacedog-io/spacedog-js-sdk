@@ -15,7 +15,7 @@ JS SDK for SpaceDog Web Service API
 
 #### ES6
 
-We also provide the possibility to use spacedog-js as a es6 module (simply because our `package.json` provides `jsnext:main` key). Then `import SpaceDog from 'SpaceDog'`
+We also provide the possibility to use spacedog-js as a es6 module (simply because our `package.json` provides `jsnext:main` key). Then `import SpaceDog from 'spacedog-js-sdk'`
 
 ### Initialization
 
