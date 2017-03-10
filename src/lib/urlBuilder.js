@@ -11,8 +11,12 @@ export default {
         return `https://${Config.backendId}.spacedog.io/1/schema`  
     },
 
+    forOneSchema (type) {
+        return `https://${Config.backendId}.spacedog.io/1/schema/${type}`  
+    },
+
     forSearch (type) {
-        return `https://${Config.backendId}.spacedog.io/1/search/`+type
+        return `https://${Config.backendId}.spacedog.io/1/search/${type}`
     }
 
 

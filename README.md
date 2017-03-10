@@ -94,7 +94,9 @@ The third argument, `paginationSession`, is an object that you would typically h
         // session.pointNextPage() => will make the session point to the next page, making next calls to search method fetch the next page
 
     },
-    session)
+    session);
+
+**The pagination session variable is the last argument.**
 
 The constructor `new SpaceDog.Data.PaginationSession` takes 2 arguments :
 
@@ -108,9 +110,76 @@ The constructor `new SpaceDog.Data.PaginationSession` takes 2 arguments :
 
 ####Schema
 
+To list existing schemas :
+
     SpaceDog.Schema.list(function(err, data){
       // data is an Object where keys are the schema
-    })
+    });
+
+To create a new schema, for instance, named "pokemon" :
+
+    SpaceDog.Schema.create( "pokemon", {
+        "_acl": {
+          "master": [
+            "search",
+            "update"
+          ],
+          "admin": [
+            "create",
+            "update_all",
+            "search",
+            "delete"
+          ],
+          "key": [
+            "search"
+          ]
+        },
+        "name": {
+          "_type": "string",
+          "_required": true
+        },
+        "description_fr": {
+          "_type": "text",
+          "_required": true,
+          "language": "english"
+        },
+        "is_active": {
+          "_type": "boolean",
+          "_required": true
+        }
+    }, function(err, data) {
+      // callback
+    });
+
+
+All possible **ACL** values (create, read, read_all, search, update, update_all, delete, delete_all) are available in `SpaceDog.DataPermission`. It exposes the following :
+
+`SpaceDog.DataPermission.all` : array of String of all the possible data permissions
+
+And these convenience data :
+
+`SpaceDog.DataPermission.default_admin` : array of String of the default values for the admin role
+
+`SpaceDog.DataPermission.default_user` : array of String of the default values for the user role
+
+`SpaceDog.DataPermission.default_key` : array of String of the default values for the key (that is, no credentials, so public) role
+
+Also, there are data types.
+
+`SpaceDog.DataTypes` returns an array of the available data types, structured like so :
+
+    [
+      {
+        name:'boolean'
+      },
+      {
+        name:'string'
+      },
+      {
+        name:'text'
+      }
+    ]
+
 
 **TODO**
 
