@@ -147,5 +147,63 @@ describe('credentials # ', function() {
     });
 
 
+    it('should create a user', function(done) {
+
+      xhrMock.post('https://dummyBackendId.spacedog.io/1/credentials', function(req, res) {
+        return res.status(201).header('Content-Type', 'application/json').body(JSON.stringify({
+          id:"dummyCredentialId",
+          status:201,
+          success:true
+        }));
+      });
+
+      xhrMock.post('https://dummyBackendId.spacedog.io/1/data/MyUser', function(req, res) {
+        return res.status(201).header('Content-Type', 'application/json').body(JSON.stringify({
+          id:"dummyMyUserId",
+          status:201,
+          success:true
+        }));
+      });
+
+      SpaceDog.Credentials.createUser({
+        credentials: {
+          "username":"dummyWrongUsername",
+          "password":"dummyWrongPassword",
+          "level": "DUMMYLEVEL",
+        },
+        user: {
+          "type":"MyUser",
+          "credentialIdField":"dummy_credential_id",
+          "payload": {
+            "lastname": "dummyLastname",
+            "firstname": "dummyFirstname",
+            "mydummyfield": "dummyFieldValue",
+          }
+        }
+      }, function(err, res){
+
+        expect(err).to.be.null
+        expect(res).to.not.be.null
+
+        expect(res).to.have.property('firstname')        
+        expect(res).to.have.property('lastname')        
+        expect(res).to.have.property('mydummyfield')        
+        expect(res).to.have.property('username')
+        expect(res).to.have.property('dummy_credential_id')
+        expect(res).to.have.property('meta')
+        expect(res).to.not.have.property('password')
+
+        expect(res.firstname).to.equal('dummyFirstname')
+        expect(res.mydummyfield).to.equal('dummyFieldValue')        
+        expect(res.meta.id).to.equal('dummyMyUserId')        
+        expect(res.dummy_credential_id).to.equal('dummyCredentialId')
+
+        done()
+
+      })
+
+    })
+
+
 });
 

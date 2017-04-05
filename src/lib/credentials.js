@@ -63,6 +63,47 @@ export default {
 
     },
 
+    createUser (opts, cb) {
+
+        UtilXHR.post({
+                username: opts.credentials.username,
+                password: opts.credentials.password,
+            },
+            UrlBuilder.forCredentials(),
+            function(err, data) {
+
+                if (err == null) {
+
+                    var userPayload = opts.user.payload
+
+                    userPayload[opts.user.credentialIdField] = data.id
+
+                    UtilXHR.post(opts.user.payload, 
+                        UrlBuilder.forData(opts.user.type), 
+                        function(err, data) {
+                            if (err == null) {
+
+                                userPayload.username = opts.credentials.username
+                                userPayload.meta = {
+                                    id:data.id
+                                }
+                                
+                                cb (null, userPayload);
+
+                            } else {
+                                cb (err, null);
+                            }
+                        });
+
+                } else {
+
+                    cb(err, null);
+
+                }
+            });
+
+    },
+
 
     forget () {
         Config.default_authorization_header = null

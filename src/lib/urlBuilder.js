@@ -17,7 +17,15 @@ export default {
 
     forSearch (type) {
         return `https://${Config.backendId}.spacedog.io/1/search/${type}`
-    }
+    },
+
+    forCredentials () {
+        return `https://${Config.backendId}.spacedog.io/1/credentials`
+    },
+
+    forData (type) {
+        return `https://${Config.backendId}.spacedog.io/1/data/${type}`
+    },
 
 
 

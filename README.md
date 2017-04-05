@@ -6,7 +6,6 @@ JS SDK for SpaceDog Web Service API
 
 `npm install spacedog-js-sdk --save`
 
-
 ## Usage
 
 ### In browser
@@ -65,6 +64,47 @@ Here is a code example on how to login :
 If a token is present, you would typically call, to auto login a user : 
 
     SpaceDog.Credentials.loginWithSavedCredentials(loginCallback)
+
+**Creating a user** in spacedog often (if not always) involve the following steps :
+
+  1. create a credential
+  2. if credential created (username available, password well formatted ...), continue
+  3. create a user of a business-specific type (ie in a collection named `admin`, `appuser`, `hordier`, ... that you, the backend admin, have created) with a field `credential_id` populated with the id returned at step 1.
+
+With the sdk, you can do this like so :
+
+
+    SpaceDog.Credentials.createUser({
+      credentials: {
+        "username":"dummyUsername",
+        "password":"dummyPassword",
+        "level": "DUMMYLEVEL",
+      },
+      user: {
+        "type":"MyUser",
+        "credentialIdField":"dummy_credential_id",
+        "payload": {
+          "lastname": "dummyLastname",
+          "firstname": "dummyFirstname",
+          "mydummyfield": "dummyFieldValue",
+        }
+      }
+    }, function(err, res){
+
+      // res will be something like this :
+      // 
+      // {
+      //   "username":"dummyUsername",
+      //   "lastname": "dummyLastname",
+      //   "firstname": "dummyFirstname",
+      //   "mydummyfield": "dummyFieldValue",
+      //   "credentialIdField": ...
+      //   "meta": {
+      //     "id": ...
+      //   }
+      // }
+
+    })
 
 
 #### Data
