@@ -1,10 +1,15 @@
-import UrlBuilder from './urlBuilder.js'
+import UrlBuilder from './urlBuilder'
 import UtilXHR from './utilXhr'
-import PaginationSession from './paginationSession.js'
+import PaginationSession from './paginationSession'
+import Object from './object'
 
 var Data = {
     
-    PaginationSession : PaginationSession,
+    PaginationSession,
+
+    buildObject (type, id, payload) {
+      return new Object (type, id, payload)
+    },
 
     /**
      * opts : { type:string }

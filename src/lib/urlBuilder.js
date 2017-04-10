@@ -1,5 +1,5 @@
 import Config from './config.js'
-
+var qs = require('qs');
 
 export default {
 
@@ -27,6 +27,12 @@ export default {
         return `https://${Config.backendId}.spacedog.io/1/data/${type}`
     },
 
-
+    forDataObject (type, id, opts) {
+        var url = `https://${Config.backendId}.spacedog.io/1/data/${type}/${id}`
+        if (opts) {
+            return `${url}?${qs.stringify(opts)}`
+        }
+        return url
+    },
 
 }

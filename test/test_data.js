@@ -101,6 +101,105 @@ describe('data # ', function() {
         }, session)
     })
 
+
+    it('should create an object', function(done) {
+
+        xhrMock.post('https://dummyBackendId.spacedog.io/1/data/dummyType', function(req, res) {
+            return res.status(200).header('Content-Type', 'application/json').body(JSON.stringify({
+                "id": "dummyId"
+            }));
+        });
+
+        SpaceDog.Data.buildObject("dummyType", null, {
+            "Foo":"Bar",
+            "Qoo":"Zux",
+        }).create(function(err, res){
+
+            expect(res).to.not.be.null
+            expect(err).to.be.null
+
+            expect(res).to.have.property('meta')
+            expect(res).to.have.property('Foo')
+            expect(res).to.have.property('Qoo')
+            expect(res.meta.id).to.equal("dummyId")
+            expect(res.Foo).to.equal("Bar")
+            expect(res.Qoo).to.equal("Zux")
+
+            done()
+        })
+
+    })
+
+
+    it('should update an object', function(done) {
+
+        xhrMock.put('https://dummyBackendId.spacedog.io/1/data/dummyType/dummyId', function(req, res) {
+            return res.status(200).header('Content-Type', 'application/json').body(JSON.stringify({
+                "success": true
+            }));
+        });
+
+        SpaceDog.Data.buildObject("dummyType", "dummyId", {
+            "Qoo":"Zux",
+        }).update(function(err, res){
+
+            expect(res).to.not.be.null
+            expect(err).to.be.null
+            
+            expect(res.success).to.be.true
+
+            done()
+        })
+
+    })
+
+
+    it('should update an object, strict style', function(done) {
+
+        xhrMock.put('https://dummyBackendId.spacedog.io/1/data/dummyType/dummyId?strict=true', function(req, res) {
+            return res.status(200).header('Content-Type', 'application/json').body(JSON.stringify({
+                "success": true
+            }));
+        });
+
+        SpaceDog.Data.buildObject("dummyType", "dummyId", {
+            "Qoo":"Zux",
+        }).update(function(err, res){
+
+            expect(res).to.not.be.null
+            expect(err).to.be.null
+            
+            expect(res.success).to.be.true
+
+            done()
+        }, { 
+            strict: true 
+        })
+
+    })
+
+
+    it('should delete an object', function(done) {
+
+        xhrMock.delete('https://dummyBackendId.spacedog.io/1/data/dummyType/dummyId', function(req, res) {
+            return res.status(200).header('Content-Type', 'application/json').body(JSON.stringify({
+                "success": true
+            }));
+        });
+
+        SpaceDog.Data.buildObject("dummyType", "dummyId").delete(function(err, res){
+
+            expect(res).to.not.be.null
+            expect(err).to.be.null
+            
+            expect(res.success).to.be.true
+
+            done()
+        })
+
+    })
+
+
     // Les 2 suivants sont moins prioritaires 
     //
     // it('should search on one type, http get', function() {

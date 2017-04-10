@@ -109,7 +109,9 @@ With the sdk, you can do this like so :
 
 #### Data
 
-`Data` is the entry point to fetching, searching, updating, deleting and creating data. The `search` method take 3 arguments : 
+`Data` is the entry point to fetching, searching, updating, deleting and creating data. 
+
+To **search**, use the `search` method. It takes 3 arguments : 
 
   - `opts` : { type:string, payload:object }
   - `cb` : callback function (err, data) ..
@@ -142,6 +144,14 @@ The constructor `new SpaceDog.Data.PaginationSession` takes 2 arguments :
 
   - `from` : integer
   - `size` : integer
+
+To **manipulate (create, update, delete)** data, fisrt, build an object : `SpaceDog.Data.buildObject(type, id, payload)`. It takes 3 argurents :
+
+  - `type` : the name of the collection
+  - `id` : String, id of the object you wish to manipulate. Put `null` when you want to to let SpaceDog automaticly set the id when creating an object.
+  - `payload` : Object, the object data
+
+Then, you can either call the following methods on this object : `.create(cb)`, `.update(cb)`, `.delete(cb)`. `cb` is the usual callback with `err` and `res`.
 
 
 ####Settings

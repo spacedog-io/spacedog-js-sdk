@@ -1,7 +1,7 @@
 
 export default class PaginationSession {
 
-    constructor(from, size) {
+    constructor (from, size) {
         this._from = from
         this._size = size
         this._total = null
