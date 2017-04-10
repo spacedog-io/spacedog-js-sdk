@@ -68,6 +68,7 @@ export default {
         UtilXHR.post({
                 username: opts.credentials.username,
                 password: opts.credentials.password,
+                email: opts.credentials.email,
             },
             UrlBuilder.forCredentials(),
             function(err, data) {
@@ -84,6 +85,7 @@ export default {
                             if (err == null) {
 
                                 userPayload.username = opts.credentials.username
+                                userPayload.email = opts.credentials.email
                                 userPayload.meta = {
                                     id:data.id
                                 }

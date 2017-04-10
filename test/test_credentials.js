@@ -167,8 +167,9 @@ describe('credentials # ', function() {
 
       SpaceDog.Credentials.createUser({
         credentials: {
-          "username":"dummyWrongUsername",
-          "password":"dummyWrongPassword",
+          "username":"dummyUsername",
+          "password":"dummyPassword",
+          "email":"dummyEmail",
           "level": "DUMMYLEVEL",
         },
         user: {
@@ -187,6 +188,8 @@ describe('credentials # ', function() {
 
         expect(res).to.have.property('firstname')        
         expect(res).to.have.property('lastname')        
+        expect(res).to.have.property('email')  
+        expect(res).to.not.have.property('password')  
         expect(res).to.have.property('mydummyfield')        
         expect(res).to.have.property('username')
         expect(res).to.have.property('dummy_credential_id')
