@@ -23,6 +23,10 @@ export default {
         return `https://${Config.backendId}.spacedog.io/1/credentials`
     },
 
+    forCredentialPassword (id) {
+        return `https://${Config.backendId}.spacedog.io/1/credentials/${id}/password`
+    },
+
     forData (type) {
         return `https://${Config.backendId}.spacedog.io/1/data/${type}`
     },

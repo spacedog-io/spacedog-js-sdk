@@ -14,7 +14,7 @@ var _xend = function(method, payload, url, cb){
         try {
             var json = JSON.parse(xhr.responseText);
 
-            // console.log("-----\nSpaceDog.Xhr# SUCCESS 88 xhr.responseText (=",xhr.responseText,") \n\n (xhr.url=",xhr.url,") \n\n (xhr.method=",xhr.method,") \n\n (xhr=",xhr,"\n\n-------\n")
+            // console.log("-----\nSpaceDog.Xhr# (",xhr.url,") SUCCESS, json is : ", json, "\n------\n")
 
             if (json != null && (json.success==false || !(xhr.status >= 200 && xhr.status < 300 ))) {
                 cb(json, null)

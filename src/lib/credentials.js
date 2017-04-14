@@ -118,5 +118,19 @@ export default {
 
     canTryLogin () {
         return localStorage.getItem('SPACEDOG_CREDENTIALS_TOKEN')!=undefined && localStorage.getItem('SPACEDOG_CREDENTIALS_TOKEN')!=null
+    },
+
+
+    updatePassword (opts, cb) {
+
+        UtilXHR.put(opts.newPassword, UrlBuilder.forCredentialPassword(opts.credentialId), function(err, data){
+            if (err == null) {
+                cb(null, data)
+            } else {
+                cb(err, null)
+            }
+
+        })
+
     }
 }

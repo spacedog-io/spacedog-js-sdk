@@ -107,6 +107,14 @@ With the sdk, you can do this like so :
     })
 
 
+To **update a user password** (method 1, where the logged in user does not need to authentify again):
+
+  SpaceDog.Credentials.updatePassword({
+    "credentialId": "dummyCredentialId",
+    "newPassword": "newDummyPassword"
+  }, function (err, res) { ... })
+
+
 #### Data
 
 `Data` is the entry point to fetching, searching, updating, deleting and creating data. 

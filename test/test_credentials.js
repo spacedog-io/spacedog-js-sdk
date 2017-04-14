@@ -208,5 +208,31 @@ describe('credentials # ', function() {
     })
 
 
+    it('should update a user password', function(done) {
+
+      xhrMock.put('https://dummyBackendId.spacedog.io/1/credentials/dummyCredentialId/password', function(req, res) {
+        return res.status(201).header('Content-Type', 'application/json').body(JSON.stringify({
+          id:"dummyCredId",
+          success:true
+        }));
+      });
+
+      SpaceDog.Credentials.updatePassword({
+        credentialId: "dummyCredentialId",
+        newPassword: "newDummyPassword",
+      }, function(err, res){
+
+        expect(err).to.be.null
+        expect(res).to.not.be.null
+
+        expect(res.success).to.be.true
+
+        done()
+
+      })
+
+    })
+
+
 });
 
