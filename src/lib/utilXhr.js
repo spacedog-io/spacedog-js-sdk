@@ -1,6 +1,6 @@
 import Config from './config'
 
-var _xend = function(method, payload, url, cb){
+var _xend = function(method, payload, url, cb, opts){
 
     var data = null;
     if (payload) {
@@ -33,7 +33,9 @@ var _xend = function(method, payload, url, cb){
     xhr.open(method, url);
     xhr.setRequestHeader("content-type", "application/json");
 
-    if (Config.default_authorization_header != null) {
+    if (opts && opts.authorization) {
+        xhr.setRequestHeader("authorization", opts.authorization)
+    } else if (Config.default_authorization_header != null) {
         xhr.setRequestHeader("authorization", Config.default_authorization_header)
     }
 
@@ -54,8 +56,8 @@ export default {
         _xend("POST", payload, url, cb)
     },
 
-    put (payload, url, cb) {
-        _xend("PUT", payload, url, cb)
+    put (payload, url, cb, opts) {
+        _xend("PUT", payload, url, cb, opts)
     },
 
     delete (url, cb) {

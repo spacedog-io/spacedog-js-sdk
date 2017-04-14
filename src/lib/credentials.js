@@ -123,6 +123,7 @@ export default {
 
     updatePassword (opts, cb) {
 
+
         UtilXHR.put(opts.newPassword, UrlBuilder.forCredentialPassword(opts.credentialId), function(err, data){
             if (err == null) {
                 cb(null, data)
@@ -130,6 +131,8 @@ export default {
                 cb(err, null)
             }
 
+        }, {
+            'authorization': 'Basic '+btoa(opts.challengedUsername+":"+opts.challengedPassword)
         })
 
     }

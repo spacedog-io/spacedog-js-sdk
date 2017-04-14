@@ -4,6 +4,10 @@ var expect = require('chai').expect;
 var xhrMock = require('xhr-mock');
 var localStorageMock = require('./util-mockLocalStorage.js')
 
+global.btoa = function (str) {
+  return new Buffer(str).toString('base64');
+}
+
 const dummyLoginBody = JSON.stringify({
             accessToken:"dummyAccessToken",
             credentials:{
@@ -211,8 +215,12 @@ describe('credentials # ', function() {
     it('should update a user password', function(done) {
 
       xhrMock.put('https://dummyBackendId.spacedog.io/1/credentials/dummyCredentialId/password', function(req, res) {
+
+        expect(req.headers()).to.not.be.null
+        expect(req.headers()['authorization']).to.not.be.undefined
+        expect(req.headers()['authorization']).to.contain("Basic cmVndWxhckFkbWluOnJlZ3VsYXJBZG1pblBhc3N3b3Jk")
+
         return res.status(201).header('Content-Type', 'application/json').body(JSON.stringify({
-          id:"dummyCredId",
           success:true
         }));
       });
@@ -220,6 +228,8 @@ describe('credentials # ', function() {
       SpaceDog.Credentials.updatePassword({
         credentialId: "dummyCredentialId",
         newPassword: "newDummyPassword",
+        challengedUsername: "regularAdmin",
+        challengedPassword: "regularAdminPassword",
       }, function(err, res){
 
         expect(err).to.be.null

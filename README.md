@@ -107,13 +107,16 @@ With the sdk, you can do this like so :
     })
 
 
-To **update a user password** (method 1, where the logged in user does not need to authentify again):
+To **update a user password** :
 
   SpaceDog.Credentials.updatePassword({
     "credentialId": "dummyCredentialId",
-    "newPassword": "newDummyPassword"
+    "newPassword": "newDummyPassword",
+    "challengedUsername": "regularAdmin",
+    "challengedPassword": "regularAdminPassword",
   }, function (err, res) { ... })
 
+`challengedUsername` and `challengedPassword` will be used as `Authorization` header, only for the xhr responsible for updating the password. The logged in user will not be impacted by this.
 
 #### Data
 
