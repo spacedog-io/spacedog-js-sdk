@@ -22,7 +22,7 @@ describe('data # ', function() {
 
         expect(req.url()).to.equal('https://dummyBackendId.spacedog.io/1/search/dummyType')
         expect(req.method()).to.equal('POST')
-        expect(req.headers()['content-type']).to.equal('application/json')
+        expect(req.headers()['content-type']).to.contain('application/json')
 
         //return null;              //simulate an error
         // return res.timeout(true); //simulate a timeout
@@ -157,7 +157,13 @@ describe('data # ', function() {
     it('should update an object, strict style', function(done) {
 
         xhrMock.put('https://dummyBackendId.spacedog.io/1/data/dummyType/dummyId?strict=true', function(req, res) {
-            return res.status(200).header('Content-Type', 'application/json').body(JSON.stringify({
+
+            expect(req.headers()).to.not.be.null
+            console.log('headers ', req.headers())
+            expect(req.headers()['content-type']).to.not.be.undefined
+            expect(req.headers()['content-type']).to.equal("application/json;charset=UTF-8")
+
+            return res.status(200).header('content-type', 'application/json').body(JSON.stringify({
                 "success": true
             }));
         });

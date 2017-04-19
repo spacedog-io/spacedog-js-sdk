@@ -31,7 +31,7 @@ var _xend = function(method, payload, url, cb, opts){
     }
 
     xhr.open(method, url);
-    xhr.setRequestHeader("content-type", "application/json");
+    xhr.setRequestHeader("content-type", "application/json;charset=UTF-8");
 
     if (opts && opts.authorization) {
         xhr.setRequestHeader("authorization", opts.authorization)
