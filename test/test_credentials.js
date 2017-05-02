@@ -137,7 +137,7 @@ describe('credentials # ', function() {
         done()
       })
     });
-
+ 
     it('should login with saved credentials', function (done) {
       var called = false
       xhrMock.get('https://dummyBaseUrl.io/1/login', function(req, res) {
@@ -155,7 +155,6 @@ describe('credentials # ', function() {
       }))
 
       SpaceDog.Credentials.loginWithSavedCredentials(function (err, res) {
-        console.log('----_> called'+called)
         expect(called).to.be.true
 
         expect(res).to.have.property("accessToken")

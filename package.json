@@ -6,7 +6,7 @@
   "jsnext:main": ".src/spacedog.js",
   "scripts": {
     "compile": "./node_modules/.bin/rollup -c",
-    "test": "mocha",
+    "test": "npm run compile && mocha",
     "dev": "watch -p \"{src,test}/**/*.js \" -c \"npm run compile && mocha\""
   },
   "repository": {
