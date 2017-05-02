@@ -9,13 +9,24 @@ describe('init # ', function() {
 
       SpaceDog.initialize("dummyBackendId")
 
-      var b = SpaceDog.getBackendId()
+      assert.equal(SpaceDog.getBackendId(), "dummyBackendId")
+      assert.equal(SpaceDog.getBaseUrl(), "https://dummyBackendId.spacedog.io")
+    });
 
-      assert.equal(b, "dummyBackendId")
+    it('should init with base url', function() {
+
+      SpaceDog.initializeWithBaseUrl("https://myPersonnal.dummyBaseUrl.com")
+
+      assert.equal(SpaceDog.getBaseUrl(), "https://myPersonnal.dummyBaseUrl.com")
+      assert.equal(SpaceDog.getBackendId(), null)
     });
 
     it('should throw error when backendId not provided', function() {
       expect(SpaceDog.initialize).to.throw("BackendId is required.")
+    });
+
+    it('should throw error when baseUrl not provided', function() {
+      expect(SpaceDog.initializeWithBaseUrl).to.throw("BaseUrl is required.")
     });
 
 });

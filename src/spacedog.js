@@ -12,14 +12,28 @@ var SpaceDog = {
             throw "BackendId is required."
         }
         Config.backendId = backendId
+        Config.baseUrl = `https://${Config.backendId}.spacedog.io`
+    },
+
+    initializeWithBaseUrl (baseUrl) {
+        if (baseUrl == undefined) {
+            throw "BaseUrl is required."
+        }
+      Config.backendId = null
+      Config.baseUrl = baseUrl
     },
     
+    getBaseUrl () {
+        return Config.baseUrl
+    },
+
     getBackendId () {
         return Config.backendId
     },
 
     forgetAll () {
         Config.backendId = null
+        Config.baseUrl = null
         Config.default_authorization_header = null
     }
 }

@@ -159,7 +159,6 @@ describe('data # ', function() {
         xhrMock.put('https://dummyBackendId.spacedog.io/1/data/dummyType/dummyId?strict=true', function(req, res) {
 
             expect(req.headers()).to.not.be.null
-            console.log('headers ', req.headers())
             expect(req.headers()['content-type']).to.not.be.undefined
             expect(req.headers()['content-type']).to.equal("application/json;charset=UTF-8")
 

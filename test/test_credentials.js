@@ -38,11 +38,14 @@ describe('credentials # ', function() {
 
     it('should login, config default header, remember, and say yes on canTryLogin', function(done) {
 
+      var called = false;
+
       xhrMock.get('https://dummyBackendId.spacedog.io/1/login', function(req, res) {
 
         expect(req.url()).to.equal('https://dummyBackendId.spacedog.io/1/login')
         expect(req.method()).to.equal('GET')
         expect(req.headers()['authorization']).to.contain("Basic ZH")
+        called=true
 
         return res.status(200).header('Content-Type', 'application/json').body(dummyLoginBody);
 
@@ -54,6 +57,8 @@ describe('credentials # ', function() {
         "rememberMe":true
       }, function(err, res){
 
+        expect(called).to.be.true
+
         expect(res).to.have.property("accessToken")
         expect(err).to.be.null;
         expect(res).to.be.instanceOf(Object)
@@ -64,13 +69,11 @@ describe('credentials # ', function() {
 
         expect(SpaceDog.Credentials.getRememberedState()).to.have.property("accessToken")
         expect(SpaceDog.Credentials.getRememberedState()).to.have.property("backendId")
+        expect(SpaceDog.Credentials.getRememberedState()).to.have.property("baseUrl")
 
         done()
       })
-
-
     });
-
 
     it('should login, config default header, not remember, and say no on canTryLogin', function(done) {
 
@@ -100,10 +103,7 @@ describe('credentials # ', function() {
 
         done()
       })
-
-
     });
-
 
     it('should fail login', function(done) {
 
@@ -136,20 +136,44 @@ describe('credentials # ', function() {
 
         done()
       })
-
-
     });
 
+    it('should login with saved credentials', function (done) {
+      var called = false
+      xhrMock.get('https://dummyBaseUrl.io/1/login', function(req, res) {
+        expect(res.headers['authorization']).to.equal("Bearer dummySavedAccessToken")
+        called = true
+        return res.status(200).header('Content-Type', 'application/json').body(JSON.stringify({
+          "accessToken": "dummyReturnedAccessToken"
+        }));
+      });
 
+      localStorage.setItem('SPACEDOG_CREDENTIALS_TOKEN', JSON.stringify({
+        backendId: null,
+        baseUrl: 'https://dummyBaseUrl.io',
+        accessToken: 'dummySavedAccessToken'
+      }))
+
+      SpaceDog.Credentials.loginWithSavedCredentials(function (err, res) {
+        console.log('----_> called'+called)
+        expect(called).to.be.true
+
+        expect(res).to.have.property("accessToken")
+        expect(err).to.be.null;
+        
+        expect(SpaceDog.Credentials.canTryLogin()).to.be.true
+        expect(SpaceDog._Config.default_authorization_header).to.equal("Bearer dummyReturnedAccessToken")
+      })
+
+      done()
+    })
 
     it('should say false by default on canTryLogin', function() {
 
         var canTryLogin = SpaceDog.Credentials.canTryLogin()
 
         expect(canTryLogin).to.be.false
-
     });
-
 
     it('should create a user', function(done) {
 
@@ -208,9 +232,7 @@ describe('credentials # ', function() {
         done()
 
       })
-
     })
-
 
     it('should update a user password', function(done) {
 
@@ -240,9 +262,7 @@ describe('credentials # ', function() {
         done()
 
       })
-
     })
-
 
 });
 

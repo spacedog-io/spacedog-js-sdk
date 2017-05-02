@@ -29,7 +29,8 @@ export default {
                     
                   localStorage.setItem('SPACEDOG_CREDENTIALS_TOKEN', JSON.stringify({
                     "accessToken":data.accessToken,
-                    "backendId":Config.backendId
+                    "backendId":Config.backendId,
+                    "baseUrl":Config.baseUrl
                   }))
                 }
                 
@@ -46,13 +47,14 @@ export default {
         var saved = JSON.parse(localStorage.getItem('SPACEDOG_CREDENTIALS_TOKEN'))
 
         Config.backendId = saved.backendId
-
+        Config.baseUrl = saved.baseUrl
         Config.default_authorization_header = "Bearer "+saved.accessToken
 
         UtilXHR.get(UrlBuilder.forLogin(), function(err, data) {
 
             if (err == null) {
-
+                console.log('---- > data ' + data)
+                console.log('---- > err ' + err)
                 Config.default_authorization_header = "Bearer "+data.accessToken
 
             }
