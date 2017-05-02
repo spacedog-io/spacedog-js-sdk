@@ -141,7 +141,7 @@ describe('credentials # ', function() {
     it('should login with saved credentials', function (done) {
       var called = false
       xhrMock.get('https://dummyBaseUrl.io/1/login', function(req, res) {
-        expect(res.headers['authorization']).to.equal("Bearer dummySavedAccessToken")
+        expect(req.headers()['authorization']).to.equal("Bearer dummySavedAccessToken")
         called = true
         return res.status(200).header('Content-Type', 'application/json').body(JSON.stringify({
           "accessToken": "dummyReturnedAccessToken"
@@ -162,9 +162,10 @@ describe('credentials # ', function() {
         
         expect(SpaceDog.Credentials.canTryLogin()).to.be.true
         expect(SpaceDog._Config.default_authorization_header).to.equal("Bearer dummyReturnedAccessToken")
+
+        done()
       })
 
-      done()
     })
 
     it('should say false by default on canTryLogin', function() {

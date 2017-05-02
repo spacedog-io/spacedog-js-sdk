@@ -53,12 +53,11 @@ export default {
         UtilXHR.get(UrlBuilder.forLogin(), function(err, data) {
 
             if (err == null) {
-                console.log('---- > data ' + data)
-                console.log('---- > err ' + err)
-                Config.default_authorization_header = "Bearer "+data.accessToken
-
+                if (data && data.accessToken) {
+                    Config.default_authorization_header = "Bearer "+data.accessToken
+                }
             }
-
+ 
             cb(err, data)
 
         })

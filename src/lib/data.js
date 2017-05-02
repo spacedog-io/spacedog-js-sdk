@@ -4,7 +4,7 @@ import PaginationSession from './paginationSession'
 import Object from './object'
 
 var Data = {
-    
+     
     PaginationSession,
 
     buildObject (type, id, payload) {
