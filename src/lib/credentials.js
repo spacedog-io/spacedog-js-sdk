@@ -136,5 +136,15 @@ export default {
             'authorization': 'Basic '+btoa(opts.challengedUsername+":"+opts.challengedPassword)
         })
 
+    },
+
+    forgotPassword (opts, cb) {
+        UtilXHR.post(opts, UrlBuilder.forCredentialForgotPassword(), function (err, data) {
+            if (err == null) {
+                cb (null, data)
+            } else {
+                cb (err, null)
+            }
+        })
     }
 }

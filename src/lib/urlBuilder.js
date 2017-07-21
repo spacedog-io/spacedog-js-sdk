@@ -1,4 +1,5 @@
 import Config from './config.js'
+import credentials from "./credentials";
 var qs = require('qs');
 
 export default {
@@ -25,6 +26,10 @@ export default {
 
     forCredentialPassword (id) {
         return `${Config.baseUrl}/1/credentials/${id}/password`
+    },
+
+    forCredentialForgotPassword () {
+      return   `${Config.baseUrl}/1/credentials/forgotPassword`
     },
 
     forData (type) {
