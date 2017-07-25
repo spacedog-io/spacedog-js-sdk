@@ -146,5 +146,17 @@ export default {
                 cb (err, null)
             }
         })
+    },
+
+    resetPassword (opts, cb) {
+        UtilXHR.post({password: opts.password}, UrlBuilder.forCredentialResetPassword(opts.credentialId, opts.passwordResetCode), function(err, data) {
+            if (err == null) {
+                cb (null, data)
+            } else {
+                cb (err, null)
+            }
+        }, {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        })
     }
 }

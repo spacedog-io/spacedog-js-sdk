@@ -29,7 +29,11 @@ export default {
     },
 
     forCredentialForgotPassword () {
-      return   `${Config.baseUrl}/1/credentials/forgotPassword`
+        return `${Config.baseUrl}/1/credentials/forgotPassword`
+    },
+
+    forCredentialResetPassword (credential_id, password_reset_code) {
+        return `${Config.baseUrl}/1/credentials/${credential_id}/password?passwordResetCode=${password_reset_code}`
     },
 
     forData (type) {
