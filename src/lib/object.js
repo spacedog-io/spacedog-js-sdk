@@ -31,4 +31,8 @@ export default class Object {
     UtilXHR.delete(UrlBuilder.forDataObject(this._type, this._id), cb)
   }
 
+  get (cb) {
+    UtilXHR.get(UrlBuilder.forDataObject(this._type, this._id), cb)
+  }
+
 }

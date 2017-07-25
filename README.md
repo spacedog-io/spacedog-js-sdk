@@ -25,6 +25,8 @@ Before anything else, you need to tell `SpaceDog` which backend to use, with a b
 
 `SpaceDog.initialize("yourBackendId")`
 
+(you also have the option to initialize with a base url directly, in case you have your own spacedog server installation with `initializeWithBaseUrl(baseUrl)`)
+
 (`SpaceDog.forgetAll()` will reset everything spacedog wise on the client side)
 
 [You can create a backend here](https://cockpit.spacedog.io/sign-up.html)
@@ -156,7 +158,7 @@ The constructor `new SpaceDog.Data.PaginationSession` takes 2 arguments :
   - `from` : integer
   - `size` : integer
 
-To **manipulate (create, update, delete)** data, fisrt, build an object : `SpaceDog.Data.buildObject(type, id, payload)`. It takes 3 argurents :
+To **manipulate (create, update, delete, get)** data, first, build an object : `SpaceDog.Data.buildObject(type, id, payload)`. It takes 3 argurents :
 
   - `type` : the name of the collection
   - `id` : String, id of the object you wish to manipulate. Put `null` when you want to to let SpaceDog automaticly set the id when creating an object.
