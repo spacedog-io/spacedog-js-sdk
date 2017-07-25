@@ -155,8 +155,6 @@ export default {
             } else {
                 cb (err, null)
             }
-        }, {
-            'Content-Type': 'application/x-www-form-urlencoded'
         })
     }
 }
