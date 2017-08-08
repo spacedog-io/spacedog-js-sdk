@@ -156,5 +156,15 @@ export default {
                 cb (err, null)
             }
         })
+    },
+
+    unblockAccount (opts, cb) {
+        UtilXHR.put(true, UrlBuilder.forCredentialEnabled(opts.credentialId), function (err, data) {
+            if (err == null) {
+                cb (null, data)
+            } else {
+                cb (err, null)
+            }
+        })
     }
 }

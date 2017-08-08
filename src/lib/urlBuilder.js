@@ -36,6 +36,10 @@ export default {
         return `${Config.baseUrl}/1/credentials/${credential_id}/password?passwordResetCode=${password_reset_code}`
     },
 
+    forCredentialEnabled (credential_id) {
+        return `${Config.baseUrl}/1/credentials/${credential_id}/enabled`
+    },
+
     forData (type) {
         return `${Config.baseUrl}/1/data/${type}`
     },
