@@ -166,5 +166,15 @@ export default {
                 cb (err, null)
             }
         })
+    },
+
+    accountIsEnabled (opts, cb) {
+        UtilXHR.get(UrlBuilder.forCredentialData(opts.credentialId), function (err, data) {
+            if (err == null) {
+                cb (null, data.enabled)
+            } else {
+                cb (err, null)
+            }
+        })
     }
 }

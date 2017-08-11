@@ -40,6 +40,10 @@ export default {
         return `${Config.baseUrl}/1/credentials/${credential_id}/enabled`
     },
 
+    forCredentialData (credential_id) {
+        return `${Config.baseUrl}/1/credentials/${credential_id}`
+    },
+
     forData (type) {
         return `${Config.baseUrl}/1/data/${type}`
     },
@@ -51,5 +55,4 @@ export default {
         }
         return url
     },
-
 }
