@@ -14,6 +14,7 @@ export default {
                 username: opts.credentials.username,
                 password: opts.credentials.password,
                 email: opts.credentials.email,
+                level: opts.credentials.level || 'USER',
             },
             UrlBuilder.forCredentials(),
             function (err, data) {
